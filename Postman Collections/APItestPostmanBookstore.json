@@ -1,0 +1,1313 @@
+{
+	"info": {
+		"_postman_id": "70f60951-6aad-479a-bba2-615c65716b0e",
+		"name": "Bookstore17",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2e3c3c09-551b-460d-9d93-0df2ffeb40d7",
+								"exec": [
+									"pm.environment.set(\"userID\", pm.response.json().userID);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dca03bce-576a-418c-b378-28f199228872",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser15\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "6561adba-501c-43d0-b8b0-c2a9a1dcb989"
+							}
+						}
+					],
+					"id": "00fe131d-03e3-428a-862d-cb66313cfa58",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86e864ac-801c-40bc-92e8-bdc92d8d27bf",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(\"Success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Result is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(\"User authorized successfully.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6fb1ae9b-4da0-4720-9525-58d455d69259",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser15\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{tokenParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Check Authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b363b38e-29a2-41d4-aa97-c1f3b85f7abd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1893ccb4-d119-4809-a74a-167d8c6164ff",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser15\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{authParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User",
+					"id": "9f891504-b033-4c7d-aaf0-e55248af3965",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				}
+			],
+			"id": "94678e01-9a3f-4120-964a-980c9d3c2697"
+		},
+		{
+			"name": "Bookstore",
+			"item": [
+				{
+					"name": "Get All Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"ISBN1\", pm.response.json().books[0].isbn);\r",
+									"\r",
+									"pm.environment.set(\"ISBN2\", pm.response.json().books[1].isbn);"
+								],
+								"type": "text/javascript",
+								"id": "6d14c17f-077d-44a0-b76b-5cd2bbe311a1"
+							}
+						}
+					],
+					"id": "c643660c-8e52-47bd-a7f5-a7846f449ad9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "0e325f91-477b-4050-a8e3-e5e2f851e36f"
+							}
+						}
+					],
+					"id": "8edd137d-10d1-4647-be45-f97913eb8e6f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{userID}}\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"{{ISBN1}}\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove All Books From User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "47674bcc-0592-41ab-b4c2-1fb62075d1b6"
+							}
+						}
+					],
+					"id": "7928219e-a9b9-43bc-9282-0de9d7a9ec5c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}?UserId={{userID}}",
+							"host": [
+								"{{baseURI}}"
+							],
+							"path": [
+								"{{bookstoreParam}}",
+								"{{multipleBookParam}}"
+							],
+							"query": [
+								{
+									"key": "UserId",
+									"value": "{{userID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "5401db09-6351-4aca-a4b1-f3cc30b1ced2"
+							}
+						}
+					],
+					"id": "7b9591db-6913-4324-8afe-bcb8350498d9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}?ISBN={{ISBN1}}",
+							"host": [
+								"{{baseURI}}"
+							],
+							"path": [
+								"{{bookstoreParam}}",
+								"{{singleBookParam}}"
+							],
+							"query": [
+								{
+									"key": "ISBN",
+									"value": "{{ISBN1}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove A Book From User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "04229ada-51dc-4f4c-bb7c-40401cad7f0e"
+							}
+						}
+					],
+					"id": "97b8e713-9d2f-4cb6-912c-53a7f57658ca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isbn\": \"{{ISBN1}}\",\r\n  \"userId\": \"{{userID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "ed87f8b1-95c2-4f6f-b2c8-53806846ab89"
+							}
+						}
+					],
+					"id": "9d0c662c-3c67-48a6-a719-3aceece46372",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{userID}}\",\r\n  \"isbn\": \"{{ISBN2}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}/{{ISBN1}}"
+					},
+					"response": []
+				}
+			],
+			"id": "7bcc0707-4745-449e-9a5e-4baf9cff3b78"
+		},
+		{
+			"name": "Runner1",
+			"item": [
+				{
+					"name": "Create New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1fa76aef-c937-4b20-a4c7-ec9060b8dbd0",
+								"exec": [
+									"pm.environment.set(\"userID\", pm.response.json().userID);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "14930448-c12c-432c-95e8-8e0104c169c8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser11\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Token For New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5efcb771-2c50-41e9-b9a8-1267fdf2ebbc",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(\"Success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Result is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(\"User authorized successfully.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "2dfcc597-88f7-44e9-8094-5b44a3c00795",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser11\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{tokenParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "5401db09-6351-4aca-a4b1-f3cc30b1ced2"
+							}
+						}
+					],
+					"id": "0decf646-651d-424f-8680-37f2c98b790e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}?ISBN={{ISBN1}}",
+							"host": [
+								"{{baseURI}}"
+							],
+							"path": [
+								"{{bookstoreParam}}",
+								"{{singleBookParam}}"
+							],
+							"query": [
+								{
+									"key": "ISBN",
+									"value": "{{ISBN1}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add A Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "0e325f91-477b-4050-a8e3-e5e2f851e36f"
+							}
+						}
+					],
+					"id": "bf55f401-5a0d-441a-a7b4-7ff453edf445",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{userID}}\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"{{ISBN1}}\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Second Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5401db09-6351-4aca-a4b1-f3cc30b1ced2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "4e14c180-c483-4abb-9251-de27fdb24633",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}?ISBN={{ISBN2}}",
+							"host": [
+								"{{baseURI}}"
+							],
+							"path": [
+								"{{bookstoreParam}}",
+								"{{singleBookParam}}"
+							],
+							"query": [
+								{
+									"key": "ISBN",
+									"value": "{{ISBN2}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Second Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e325f91-477b-4050-a8e3-e5e2f851e36f",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1322ed03-10be-4cd5-8b0c-c74ca1aa1697",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{userID}}\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"{{ISBN2}}\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User With Two Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16d8d589-86ee-4c56-9384-1999fab2a208",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"\r",
+									"    pm.test(\"User has books\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.books).to.not.be.empty;\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7a7bf958-4f12-454c-8bc9-53066572b846",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove All Books From User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "47674bcc-0592-41ab-b4c2-1fb62075d1b6"
+							}
+						}
+					],
+					"id": "09e2e94d-9ad0-4ff9-a76c-28686b1c9e1a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}?UserId={{userID}}",
+							"host": [
+								"{{baseURI}}"
+							],
+							"path": [
+								"{{bookstoreParam}}",
+								"{{multipleBookParam}}"
+							],
+							"query": [
+								{
+									"key": "UserId",
+									"value": "{{userID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User With No Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"\r",
+									"    pm.test(\"User doesn't have any books\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.books).to.be.empty;\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "86856832-f4fb-45da-bab0-54ffa58cf7c4"
+							}
+						}
+					],
+					"id": "7f31cb26-777b-4678-91b6-54512f0041b7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c38a00cc-5457-4f4d-b3ef-07dd1366d067",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "86539e52-c032-4dd6-a71c-4dc565117d06",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				}
+			],
+			"id": "9162b682-91e1-4420-83f7-96ddba60f1e3"
+		},
+		{
+			"name": "Runner2",
+			"item": [
+				{
+					"name": "Create New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1fa76aef-c937-4b20-a4c7-ec9060b8dbd0",
+								"exec": [
+									"pm.environment.set(\"userID\", pm.response.json().userID);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "64a0a06b-5ac9-4c10-90a6-cfe16039f1bd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser30\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Token For New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5efcb771-2c50-41e9-b9a8-1267fdf2ebbc",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(\"Success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Result is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(\"User authorized successfully.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "66396163-0108-4564-bbfd-ce6c4c5037f0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser30\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{tokenParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"ISBN1\", pm.response.json().books[0].isbn);\r",
+									"\r",
+									"pm.environment.set(\"ISBN2\", pm.response.json().books[1].isbn);"
+								],
+								"type": "text/javascript",
+								"id": "6d14c17f-077d-44a0-b76b-5cd2bbe311a1"
+							}
+						}
+					],
+					"id": "d30234d8-5f96-4f8c-af43-8f1fce4f39c9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Add A Book To New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "c93733fd-3db6-4ee3-9b33-9ddb880859fd"
+							}
+						}
+					],
+					"id": "a3b0d469-7ca7-40c3-9ab6-0761d1de02c7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{userID}}\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"{{ISBN1}}\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User With One Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86856832-f4fb-45da-bab0-54ffa58cf7c4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User has one book\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.books.length).to.eql(1); \r",
+									"});\r",
+									"\r",
+									" "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b1aea9e1-c3e4-41ed-92a0-4a7e31316aa6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "ed87f8b1-95c2-4f6f-b2c8-53806846ab89"
+							}
+						}
+					],
+					"id": "5be0ff74-4622-4c8e-a6d9-4faffbe19ba9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{userID}}\",\r\n  \"isbn\": \"{{ISBN2}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}/{{ISBN1}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove A Book From New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63dfbedf-b2c0-4e0b-b92c-e169acc9298b",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "11e9a7e0-2be4-49c9-9f57-19131daed35b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isbn\": \"{{ISBN2}}\",\r\n  \"userId\": \"{{userID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User With No Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"\r",
+									"    pm.test(\"User doesn't have any books\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.books).to.be.empty;\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f276bf0d-13df-4c81-b5a1-5dc6e9069478"
+							}
+						}
+					],
+					"id": "f18518b8-eb8d-428f-a33e-ff4156401558",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "388b4361-ffea-4645-a27a-a0edc7e83077"
+							}
+						}
+					],
+					"id": "a6d0314f-f26e-45a6-aaba-92885a66658e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				}
+			],
+			"id": "334ec0f9-c3dc-4a6f-932c-01beea2b9dbd"
+		}
+	]
+}
