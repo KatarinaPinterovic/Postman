@@ -1,0 +1,834 @@
+{
+	"info": {
+		"_postman_id": "06e68cb8-6629-4a8a-8d1d-c050a0e261f0",
+		"name": "PetStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Runner Copy",
+			"item": [
+				{
+					"name": "Create new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1fa76aef-c937-4b20-a4c7-ec9060b8dbd0",
+								"exec": [
+									"pm.environment.set(\"userID\", pm.response.json().userID);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "476cce41-5476-4778-af72-7109814ccdbd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser0815\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Token for new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5efcb771-2c50-41e9-b9a8-1267fdf2ebbc",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(\"Success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Result is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result).to.eql(\"User authorized successfully.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "17b087b3-169d-4c42-92d6-cdf6360e44fd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"testUser0815\",\r\n  \"password\": \"D4n4sHuperSutraSuper#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{accountParam}}/{{tokenParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user with no books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"\r",
+									"    pm.test(\"User doesn't have any books\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.books).to.be.empty;\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "86856832-f4fb-45da-bab0-54ffa58cf7c4"
+							}
+						}
+					],
+					"id": "4872e68d-c5c3-42bb-85ef-0af15e0b6ea4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Add book to new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "c93733fd-3db6-4ee3-9b33-9ddb880859fd"
+							}
+						}
+					],
+					"id": "0627a888-984e-4494-b297-ef2da8d0af74",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"{{userID}}\",\r\n  \"collectionOfIsbns\": [\r\n    {\r\n      \"isbn\": \"{{ISBN1}}\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{multipleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user with a book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"\r",
+									"    pm.test(\"User has book\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.books).to.not.be.empty;\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "16d8d589-86ee-4c56-9384-1999fab2a208"
+							}
+						}
+					],
+					"id": "42814ae9-ad14-4fd3-862d-ca993582fbb7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a book from new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "63dfbedf-b2c0-4e0b-b92c-e169acc9298b"
+							}
+						}
+					],
+					"id": "9f0afbe2-9b74-4899-90e3-e7010e9c65d2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isbn\": \"{{ISBN1}}\",\r\n  \"userId\": \"{{userID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a book from new user Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "63dfbedf-b2c0-4e0b-b92c-e169acc9298b"
+							}
+						}
+					],
+					"id": "b4b9441b-2562-4f63-8e6f-66a9905fd725",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isbn\": \"{{ISBN1}}\",\r\n  \"userId\": \"{{userID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a book from new user Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "63dfbedf-b2c0-4e0b-b92c-e169acc9298b"
+							}
+						}
+					],
+					"id": "a208afc7-6fea-41f4-9cd0-027dbca9e624",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isbn\": \"{{ISBN1}}\",\r\n  \"userId\": \"{{userID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURI}}/{{bookstoreParam}}/{{singleBookParam}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user with no books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.username).not.equal(null);\r",
+									"\r",
+									"    pm.test(\"User doesn't have any books\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.books).to.be.empty;\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f276bf0d-13df-4c81-b5a1-5dc6e9069478"
+							}
+						}
+					],
+					"id": "93fc8b93-d358-4dd7-96e3-09f5b42440a4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "388b4361-ffea-4645-a27a-a0edc7e83077"
+							}
+						}
+					],
+					"id": "28c1cffd-d3d3-4814-85ac-00c1d900665a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{baseURI}}/{{accountParam}}/{{userParam}}/{{userID}}"
+					},
+					"response": []
+				}
+			],
+			"id": "5b5ceff4-0b61-4fc3-b3c6-aa7d51cb35e9"
+		},
+		{
+			"name": "Add New Pet",
+			"id": "08fa8398-2822-49e2-8e01-7e27f342a1d0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1508,\r\n  \"name\": \"Kan\",\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{petParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Find Pet By ID",
+			"id": "8f56f468-c2cf-4c72-a8ba-c23cd33cf81e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURI}}/{{petParam}}/{{petID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "514b4d97-4650-4f37-bbd7-f776bcbd6af6",
+						"exec": [
+							"pm.environment.set(\"status\", pm.response.json().status);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "1e0a634e-6987-46d6-9749-c9cb55a05172",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURI}}/{{petParam}}/{{findbystatusParam}}?status=pending",
+					"host": [
+						"{{baseURI}}"
+					],
+					"path": [
+						"{{petParam}}",
+						"{{findbystatusParam}}"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "pending"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update An Existing Pet",
+			"id": "e55e402a-6879-4002-bac7-47accbfc954f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1508,\r\n  \"name\": \"Kan\",\r\n  \"status\": \"sold\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{petParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Acces To Petstore Orders",
+			"id": "df87add7-88e8-4316-b636-bf04caf8a00e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1508,\r\n  \"petId\": 1508,\r\n  \"quantity\": 1,\r\n  \"shipDate\": \"2023-10-06T18:43:23.349Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{storeParam}}/{{orderParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Pet Inventories By Status",
+			"id": "ff08e227-a528-4f43-9900-9bcce1324567",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURI}}/{{storeParam}}/{{inventoryParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"id": "64a7d984-2850-4fc1-8ccd-250265187cd0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2020,\r\n  \"username\": \"petodimenziona\",\r\n  \"firstName\": \"Katarina\",\r\n  \"lastName\": \"Pinterovic\",\r\n  \"email\": \"test@gmail.com\",\r\n  \"password\": \"Password123\",\r\n  \"phone\": \"test\",\r\n  \"userStatus\":0 \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{userParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"id": "dfa58678-07a1-4fb3-9e23-910a478b60bc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURI}}/{{userParam}}/login?{{usernameKey}}=&{{passwordKey}}=",
+					"host": [
+						"{{baseURI}}"
+					],
+					"path": [
+						"{{userParam}}",
+						"login"
+					],
+					"query": [
+						{
+							"key": "{{usernameKey}}",
+							"value": ""
+						},
+						{
+							"key": "{{passwordKey}}",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Username",
+			"id": "45338de5-9f99-4859-8aef-402c0a9ff4eb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURI}}/{{userParam}}/{{updatedUsername}}?username=testUser",
+					"host": [
+						"{{baseURI}}"
+					],
+					"path": [
+						"{{userParam}}",
+						"{{updatedUsername}}"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "testUser"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"id": "7ed2e944-c4d0-4106-a70e-a556a9916761",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2020,\r\n  \"username\": \"testUser\",\r\n  \"firstName\": \"Katarina\",\r\n  \"lastName\": \"Pinterovic\",\r\n  \"email\": \"test@gmail.com\",\r\n  \"password\": \"Password123\",\r\n  \"phone\": \"666\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURI}}/{{userParam}}/{{username}}?username=petodimenziona",
+					"host": [
+						"{{baseURI}}"
+					],
+					"path": [
+						"{{userParam}}",
+						"{{username}}"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "petodimenziona"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"id": "1558e9bb-3659-4cbd-a614-0c16ac27bbad",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURI}}/{{userParam}}/{{logoutParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Store Place An Order",
+			"id": "ae958d4b-be33-4f13-9c0b-bf04131b05bb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2020,\r\n  \"petId\": 6,\r\n  \"quantity\": 2,\r\n  \"shipDate\": \"2023-10-08T07:23:03.303Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{storeParam}}/{{orderParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Find Purchase Order By ID",
+			"id": "0cb3fffa-9a49-4066-ae67-0e49db86d1a9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURI}}/{{storeParam}}/{{orderParam}}/4?orderId=4",
+					"host": [
+						"{{baseURI}}"
+					],
+					"path": [
+						"{{storeParam}}",
+						"{{orderParam}}",
+						"4"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Returns Pet Inventories By Status",
+			"id": "5d8e4090-ad4f-4f7a-a706-adcb0c05e108",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURI}}/{{storeParam}}/{{inventoryParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Purchase Order By Id",
+			"id": "eddb82c7-f8a8-4ade-9c81-a3b0eb8e60ab",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURI}}/{{storeParam}}/{{orderParam}}/4?orderId=4",
+					"host": [
+						"{{baseURI}}"
+					],
+					"path": [
+						"{{storeParam}}",
+						"{{orderParam}}",
+						"4"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
