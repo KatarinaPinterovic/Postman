@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "705a3e95-15b6-44b4-a229-27a225e38d4c",
+		"name": "API17",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HealthCheck",
+			"id": "bce48697-d81e-4c2a-9a79-7295cefc1173",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURI}}/{{pingParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "GetBookingIds",
+			"id": "c2eefea3-4d1b-42b7-8b5c-cb6a34ddb2a5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURI}}/{{bookingParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "GetBooking",
+			"id": "42b71918-74e2-4093-93cc-b2ae855092b2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURI}}/{{bookingParam}}/{{bookingID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "363b1df5-42bd-484d-9c08-aefb8c2cb1fe",
+						"exec": [
+							"pm.environment.set(\"bookingID\", pm.response.json().bookingid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "69f82c85-1416-4a61-8951-5aa65292875c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\" : \"Pera\",\r\n    \"lastname\" : \"Peric\",\r\n    \"totalprice\" : 300,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2023-10-09\",\r\n        \"checkout\" : \"2023-11-12\"\r\n    },\r\n    \"additionalneeds\" : \"Dinner\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{bookingParam}}/"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateBooking",
+			"id": "1d8a456c-081e-49c8-83b9-1eec6cde76a3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Pera\",\r\n    \"lastname\": \"Peric\",\r\n    \"totalprice\": 300,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2023-10-09\",\r\n        \"checkout\": \"2023-11-06\"\r\n    },\r\n    \"additionalneeds\": \"Parking\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{bookingParam}}/{{bookingID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "PartialUpdateBooking",
+			"id": "2f62e9cf-4e84-4dcc-aec1-01578f044f83",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"depositpaid\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{bookingParam}}/{{bookingID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02826722-4049-4df2-b6dd-4ec44f0d8aea",
+						"exec": [
+							"pm.environment.set(\"token\", pm.response.json().token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "38fad69d-a59b-455a-a074-a7333b29a4c1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURI}}/{{tokenParam}}"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteBooking",
+			"id": "6614c31b-2ecf-4f80-bdfa-9370964f74d6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"url": "{{baseURI}}/{{bookingParam}}/{{bookingID}}"
+			},
+			"response": []
+		}
+	]
+}
